@@ -23,10 +23,18 @@ class TimeModuleView extends StatelessWidget {
                 TimeModuleUtils.getFormattedDate(state.currentTime!),
                 style: Theme.of(context).textTheme.headline6,
               ),
-              Text(
-                TimeModuleUtils.getFormattedTime(state.currentTime!),
-                style: Theme.of(context).textTheme.headline1,
-              )
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 600),
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: child,
+                ),
+                child: Text(
+                  TimeModuleUtils.getFormattedTime(state.currentTime!),
+                  key: ValueKey<DateTime>(state.currentTime!),
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
             ],
           );
         },

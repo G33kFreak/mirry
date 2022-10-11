@@ -11,8 +11,8 @@ class MainScreenWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            children: [
-              const TimeModuleView(),
+            children: const [
+              TimeModuleView(),
             ],
           ),
         ),
