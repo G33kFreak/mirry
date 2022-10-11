@@ -3,7 +3,7 @@
 - [x] Authentication
     - [x] JWT
     - [ ] Face recognition
-- [ ] Fetch weather, local time
+- [x] Fetch weather, local time
 - [ ] News
 - [x] TODO list
 - [ ] Integration with google calendar

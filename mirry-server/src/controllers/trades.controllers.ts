@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import CurrenciesPairs from "../models/CurrenciesPairs";
-import { getCurrenciesTradesFromApi, getCurrenciesTradesFromCache, saveCurrenciesTradesToCache } from "../repositories/polygonRepository";
+import { getCurrenciesTradesFromApi, getCurrenciesTradesFromCache, saveCurrenciesTradesToCache } from "../repositories/polygon.repostory";
 import { getInternalError } from "../utils/utils";
 
 const getTrades = async (req: Request, res: Response, next: NextFunction) => {
