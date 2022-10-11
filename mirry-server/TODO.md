@@ -1,12 +1,12 @@
 ## Basic functionality:
 
-- [*] Authentication
-    - [*] JWT
+- [x] Authentication
+    - [x] JWT
     - [ ] Face recognition
 - [ ] Fetch weather, local time
 - [ ] News
-- [*] TODO list
+- [x] TODO list
 - [ ] Integration with google calendar
-- [ ] Currencies
+- [x] Currencies
 - [ ] Music
 - [ ] "Mirry" voice supporter
