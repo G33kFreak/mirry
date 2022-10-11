@@ -56,8 +56,6 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         }
     }
 
-    // const accessToken = jsonwebtoken.sign(user?._id, env.SECRET_HASH, )
-
     return next(getUnauthorizedException())
 }
 
