@@ -6,14 +6,18 @@ import { getUnauthorizedException, isTokenExpired } from "../utils/authenticatio
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.headers['authorization']
 
+    if (accessToken == env.MIRROR_API_KEY) {
+        next()
+    }
+
     if (accessToken) {
         try {
             const verifiedToken = jsonwebtoken.verify(accessToken, env.SECRET_HASH) as JwtPayload
 
-            if (isTokenExpired(verifiedToken.exp!)){
+            if (isTokenExpired(verifiedToken.exp!)) {
                 next(getUnauthorizedException())
             }
-            
+
             req.headers['user'] = verifiedToken.user
             next()
         } catch (e) {

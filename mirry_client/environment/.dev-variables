@@ -1,0 +1,4 @@
+APP_NAME_DEV = Mirry [dev]
+APP_SUFFIX_DEV = .dev
+MIRROR_API_KEY = 5ba88b4e-7328-4a41-bb0b-7b1968f95d7f
+BASE_URL=http://127.0.0.1:8000
