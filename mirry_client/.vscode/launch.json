@@ -9,10 +9,10 @@
       "request": "launch",
       "type": "dart",
       "args": [
-        "--dart-define=APP_NAME=Dev app",
+        "--dart-define=APP_NAME=Mirry[dev]",
         "--dart-define=APP_SUFFIX=.dev",
-        "--dart-define=SENTRY_DSN=value",
-        "--dart-define=SENTRY_ENVIRONMENT=development"
+        "--dart-define=MIRROR_API_KEY=5ba88b4e-7328-4a41-bb0b-7b1968f95d7f",
+        "--dart-define=BASE_URL=http://127.0.0.1:8000"
       ]
     },
     {
@@ -21,10 +21,10 @@
       "type": "dart",
       "flutterMode": "profile",
       "args": [
-        "--dart-define=APP_NAME=Dev app",
+        "--dart-define=APP_NAME=Mirry [dev]",
         "--dart-define=APP_SUFFIX=.dev",
-        "--dart-define=SENTRY_DSN=value",
-        "--dart-define=SENTRY_ENVIRONMENT=development"
+        "--dart-define=MIRROR_API_KEY=5ba88b4e-7328-4a41-bb0b-7b1968f95d7f",
+        "--dart-define=BASE_URL=http://127.0.0.1:8000"
       ]
     },
     {
@@ -32,9 +32,7 @@
       "request": "launch",
       "type": "dart",
       "args": [
-        "--dart-define=APP_NAME=Prod app",
-        "--dart-define=SENTRY_DSN=value",
-        "--dart-define=SENTRY_ENVIRONMENT=production"
+        "--dart-define=APP_NAME=Mirry",
       ]
     },
     {
@@ -43,9 +41,7 @@
       "type": "dart",
       "flutterMode": "profile",
       "args": [
-        "--dart-define=APP_NAME=Prod app",
-        "--dart-define=SENTRY_DSN=value",
-        "--dart-define=SENTRY_ENVIRONMENT=production"
+        "--dart-define=APP_NAME=Mirry",
       ]
     },
   ]
