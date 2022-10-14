@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import HttpException from "../models/HttpException";
 import MirrorSocketActions from "../models/MirrorSocketActions";
 import { getMirrorSocket } from "../sockets/mirror.socket";
+import { getMirrorSocketError } from "../utils/utils";
 
 const started = async (req: Request, res: Response, next: NextFunction) => {
     const socket = await getMirrorSocket()
@@ -14,7 +15,7 @@ const started = async (req: Request, res: Response, next: NextFunction) => {
             .json()
     }
 
-    next(new HttpException(StatusCodes.SERVICE_UNAVAILABLE))
+    next(getMirrorSocketError())
 }
 
 const stoped = async (req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +28,7 @@ const stoped = async (req: Request, res: Response, next: NextFunction) => {
             .json()
     }
 
-    next(new HttpException(StatusCodes.SERVICE_UNAVAILABLE))
+    next(getMirrorSocketError())
 }
 
 export {

@@ -111,6 +111,12 @@ class TeethBrushingModuleBloc
   Future<void> close() {
     _timer?.cancel();
     _pauseTimer?.cancel();
+    _mirrySocket.socketChannel.off(
+      MirrySocketActions.brushingTeethStarted.value,
+    );
+    _mirrySocket.socketChannel.off(
+      MirrySocketActions.brushingTeethStoped.value,
+    );
     return super.close();
   }
 }
