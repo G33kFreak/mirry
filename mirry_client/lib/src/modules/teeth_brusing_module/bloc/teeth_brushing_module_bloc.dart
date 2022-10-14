@@ -12,12 +12,15 @@ part 'teeth_brushing_module_event.dart';
 part 'teeth_brushing_module_state.dart';
 part 'teeth_brushing_module_bloc.g.dart';
 
-const _timeToBrushInSeconds = 40; //180;
+const _timeToBrushInSeconds = 180;
+const _timeFromPauseToFinishInSeconds = 30;
 
 class TeethBrushingModuleBloc
     extends Bloc<TeethBrushingModuleEvent, TeethBrushingModuleState> {
   final MirrySocket _mirrySocket;
   PausableTimer? _timer;
+  Timer? _pauseTimer;
+  int _secondsInProcess = 0;
 
   TeethBrushingModuleBloc({required MirrySocket mirrySocket})
       : _mirrySocket = mirrySocket,
@@ -27,12 +30,34 @@ class TeethBrushingModuleBloc
     on<BrushingStateChanged>(_onBrushingStateChanged);
   }
 
-  //TODO: Add logic with paused and finished
   void _setupSocketActions() {
     _mirrySocket.socketChannel.on(
       MirrySocketActions.brushingTeethStarted.value,
       (_) => add(const BrushingStateChanged(InProgressState())),
     );
+    _mirrySocket.socketChannel.on(
+      MirrySocketActions.brushingTeethStoped.value,
+      (_) => _onStoped(),
+    );
+  }
+
+  void _onStoped() {
+    if (state.progress < 100) {
+      _pauseTimer = Timer.periodic(
+        const Duration(seconds: 1),
+        _pauseTimerUpdater,
+      );
+      add(const BrushingStateChanged(PausedState()));
+    } else {
+      add(const BrushingStateChanged(FinishedState()));
+    }
+  }
+
+  void _pauseTimerUpdater(Timer timer) {
+    if (timer.tick > _timeFromPauseToFinishInSeconds) {
+      add(const BrushingStateChanged(FinishedState()));
+      _pauseTimer!.cancel();
+    }
   }
 
   void _onBrushingStateChanged(
@@ -40,6 +65,7 @@ class TeethBrushingModuleBloc
     Emitter<TeethBrushingModuleState> emit,
   ) {
     if (event.newValue is InProgressState) {
+      _pauseTimer?.cancel();
       if (_timer == null || !_timer!.isActive) {
         _timer = PausableTimer(const Duration(seconds: 1), _timerUpdater)
           ..start();
@@ -49,8 +75,9 @@ class TeethBrushingModuleBloc
     } else if (event.newValue is PausedState) {
       _timer!.pause();
     } else if (event.newValue is FinishedState) {
+      _secondsInProcess = 0;
       _timer!.cancel();
-      emit(state.copyWith(brushingState: const IdleState(), progress: 100));
+      emit(state.copyWith(brushingState: const IdleState(), progress: 0));
       return;
     }
 
@@ -58,7 +85,8 @@ class TeethBrushingModuleBloc
   }
 
   void _timerUpdater() {
-    final newProgressValue = _timer!.tick * 100 / _timeToBrushInSeconds;
+    final newProgressValue = _secondsInProcess * 100 / _timeToBrushInSeconds;
+    _secondsInProcess++;
     if (newProgressValue >= 100) {
       add(const BrushingStateChanged(FinishedState()));
     } else {
@@ -82,6 +110,7 @@ class TeethBrushingModuleBloc
   @override
   Future<void> close() {
     _timer?.cancel();
+    _pauseTimer?.cancel();
     return super.close();
   }
 }

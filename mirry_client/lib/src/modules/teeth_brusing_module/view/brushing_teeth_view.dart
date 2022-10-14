@@ -9,32 +9,48 @@ import 'package:mirry_client/src/modules/teeth_brusing_module/utils/brushing_sta
 class BrushingTeethView extends StatelessWidget {
   const BrushingTeethView({Key? key}) : super(key: key);
 
+  Widget _getWidgetByBrushingState(BrushingState state) {
+    if (state is InProgressState) {
+      return Lottie.asset(
+        'assets/animations/teeth_brushing.json',
+        width: 200,
+      );
+    } else if (state is PausedState) {
+      return const Icon(
+        Icons.pause_rounded,
+        color: Colors.white,
+        size: 100,
+      );
+    }
+
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TeethBrushingModuleBlocProvider(
       child: BlocBuilder<TeethBrushingModuleBloc, TeethBrushingModuleState>(
         builder: (context, state) {
-          return CircularProgressBarWithLines(
-            percent: state.progress.toDouble(),
-            linesColor: Colors.white,
-            centerWidgetBuilder: (context) => AnimatedSwitcher(
-              transitionBuilder: (child, animation) => ScaleTransition(
-                scale: animation,
-                child: child,
-              ),
-              duration: const Duration(milliseconds: 300),
-              child: state.brushingState is InProgressState
-                  ? Lottie.asset(
-                      'assets/animations/teeth_brushing.json',
-                      width: 200,
-                    )
-                  : OutlinedButton(
-                      onPressed: () => context
-                          .read<TeethBrushingModuleBloc>()
-                          .add(const BrushingStateChanged(InProgressState())),
-                      child: Text('test'),
-                    ),
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: child,
             ),
+            child: state.brushingState is IdleState
+                ? Container()
+                : CircularProgressBarWithLines(
+                    percent: state.progress.toDouble(),
+                    linesColor: Colors.white,
+                    centerWidgetBuilder: (context) => AnimatedSwitcher(
+                      transitionBuilder: (child, animation) => ScaleTransition(
+                        scale: animation,
+                        child: child,
+                      ),
+                      duration: const Duration(milliseconds: 300),
+                      child: _getWidgetByBrushingState(state.brushingState),
+                    ),
+                  ),
           );
         },
       ),
