@@ -11,3 +11,4 @@
 - [x] Currencies
 - [ ] Music
 - [ ] "Mirry" voice supporter
+- [x] Teeth brushing functionality

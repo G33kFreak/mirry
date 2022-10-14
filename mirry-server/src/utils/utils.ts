@@ -8,6 +8,14 @@ const getInternalError = (details: any) => {
     )
 }
 
+const getMirrorSocketError = () => {
+    return new HttpException(
+        StatusCodes.SERVICE_UNAVAILABLE,
+        {socket:"Mirror socket is not available"}
+    )
+}
+
 export {
-    getInternalError
+    getInternalError,
+    getMirrorSocketError
 }
