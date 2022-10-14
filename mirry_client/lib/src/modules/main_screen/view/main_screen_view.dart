@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirry_client/src/modules/teeth_brusing_module/view/brushing_teeth_view.dart';
 import 'package:mirry_client/src/modules/time_module/view/time_module_view.dart';
-import 'package:mirry_client/src/services/user_recognition/bloc/user_recognition_bloc.dart';
 
 class MainScreenWidget extends StatelessWidget {
   const MainScreenWidget({Key? key}) : super(key: key);
@@ -13,14 +12,9 @@ class MainScreenWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            children: [
+            children: const [
               TimeModuleView(),
-              OutlinedButton(
-                onPressed: () => context
-                    .read<UserRecognitionBloc>()
-                    .add(UserChanged('test')),
-                child: Text('test'),
-              )
+              BrushingTeethView(),
             ],
           ),
         ),

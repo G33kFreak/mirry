@@ -13,7 +13,17 @@ const setupMirrorSocket = (httpServer: HttpServer) => {
     })
 }
 
+const getMirrorSocket = async () => {
+    const sockets = await socketServer.fetchSockets()
+
+    if (sockets.length > 0) {
+        return sockets[0]
+    }
+
+    return null
+}
+
 export {
     setupMirrorSocket,
-    socketServer
+    getMirrorSocket
 }

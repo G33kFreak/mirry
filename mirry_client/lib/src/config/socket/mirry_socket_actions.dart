@@ -2,6 +2,7 @@ enum MirrySocketActions {
   connection,
   faceRecognized,
   recognizedUserLeft,
+  brushingTeethStarted,
 }
 
 extension GetKebabCase on MirrySocketActions {
@@ -13,6 +14,8 @@ extension GetKebabCase on MirrySocketActions {
         return 'face-recognized';
       case MirrySocketActions.recognizedUserLeft:
         return 'recognized-user-left';
+      case MirrySocketActions.brushingTeethStarted:
+        return 'brushing-teeth-started';
     }
   }
 }
