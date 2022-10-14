@@ -10,7 +10,7 @@ const userRecognized = async (req: Request, res: Response, next: NextFunction) =
     const { username } = req.body
 
     try {
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ username }).select('-password')
         const socket = await getMirrorSocket()
 
         if (user == null) {
