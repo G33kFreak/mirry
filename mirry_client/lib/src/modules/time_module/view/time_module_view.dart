@@ -13,7 +13,6 @@ class TimeModuleView extends StatelessWidget {
       child: BlocBuilder<TimeModuleBloc, TimeModuleState>(
         builder: (context, state) {
           if (state.currentTime == null) {
-            context.read<TimeModuleBloc>().add(const InitTimeModule());
             return Container();
           }
 

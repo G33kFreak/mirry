@@ -1,6 +1,8 @@
 {
   "appTitle": "Mirry",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+  "weather": "Weather",
+  "feelsLike":"Feels like",
+  "humidity":"Humidity",
+  "visibility":"Visibility",
+  "windSpeed":"Wind speed"
 }
