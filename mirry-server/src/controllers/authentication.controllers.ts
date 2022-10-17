@@ -7,6 +7,8 @@ import bcrypt from 'bcrypt'
 import { Tokens } from "../models/Tokens"
 import { getInternalError } from "../utils/utils"
 import jsonwebtoken from "jsonwebtoken"
+import multer from "multer"
+import usersImagesStorage from "../config/multer"
 
 const refreshTokens = async (req: Request, res: Response, next: NextFunction) => {
     const { refreshToken } = req.body
@@ -59,6 +61,8 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     return next(getUnauthorizedException())
 }
 
+const uploadUserPhoto = multer({ storage: usersImagesStorage }).single('photo')
+
 const signup = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body
 
@@ -77,7 +81,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
             password: encryptedPassword
         })
         await newUser.save()
-
+        
         return res
             .status(StatusCodes.CREATED)
             .json(req.body)
@@ -98,5 +102,6 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 export {
     refreshTokens,
     login,
+    uploadUserPhoto,
     signup
 }

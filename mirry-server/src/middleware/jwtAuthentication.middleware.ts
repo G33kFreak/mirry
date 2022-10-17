@@ -7,7 +7,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.headers['authorization']
 
     if (accessToken == env.MIRROR_API_KEY) {
-        next()
+        return next()
     }
 
     if (accessToken) {
