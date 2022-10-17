@@ -38,7 +38,7 @@ class BrushingTeethView extends StatelessWidget {
               child: child,
             ),
             child: state.brushingState is IdleState
-                ? Container()
+                ? const SizedBox(height: 300, width: 300)
                 : CircularProgressBarWithLines(
                     percent: state.progress.toDouble(),
                     linesColor: Colors.white,

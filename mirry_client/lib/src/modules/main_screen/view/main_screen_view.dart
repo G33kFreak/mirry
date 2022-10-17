@@ -9,16 +9,24 @@ class MainScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: const [
-              TimeModuleView(),
-              BrushingTeethView(),
-              WeatherModuleView(),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const TimeModuleView(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Expanded(
+                  child: WeatherModuleView(),
+                ),
+                Expanded(
+                  child: BrushingTeethView(),
+                ),
+                Spacer(),
+              ],
+            ),
+          ],
         ),
       ),
     );
