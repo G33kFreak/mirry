@@ -14,14 +14,14 @@ const userRecognized = async (req: Request, res: Response, next: NextFunction) =
         const socket = await getMirrorSocket()
 
         if (user == null) {
-            next(new HttpException(
+            return next(new HttpException(
                 StatusCodes.NOT_FOUND,
                 { username: "Doesn't exists" }
             ))
         }
 
         if (socket == null) {
-            next(getMirrorSocketError())
+            return next(getMirrorSocketError())
         }
 
         socket!.emit(MirrorSocketActions.FACE_RECOGNIZED, user)

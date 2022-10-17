@@ -10,6 +10,6 @@ abstract class UserRecognitionEvent extends Equatable {
 @autoequalMixin
 class UserChanged extends UserRecognitionEvent
     with _$UserChangedAutoequalMixin {
-  final String? newUser;
+  final User? newUser;
   const UserChanged(this.newUser);
 }

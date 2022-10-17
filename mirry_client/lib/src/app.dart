@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mirry_client/src/config/routes.dart';
 import 'package:mirry_client/src/config/theme.dart';
 import 'package:mirry_client/src/services/services_wrapper/services_provider.dart';
+import 'package:mirry_client/src/services/services_wrapper/services_wrapper.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
               AppLocalizations.of(context)!.appTitle,
           themeMode: ThemeMode.dark,
           darkTheme: AppTheme.mainTheme,
+          builder: (context, child) => ServicesWrapper(
+            child: child,
+          ),
         ),
       );
 }
