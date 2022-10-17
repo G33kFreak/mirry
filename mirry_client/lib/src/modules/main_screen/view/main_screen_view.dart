@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mirry_client/src/modules/teeth_brusing_module/view/brushing_teeth_view.dart';
 import 'package:mirry_client/src/modules/time_module/view/time_module_view.dart';
+import 'package:mirry_client/src/modules/weather_module/view/weather_module_view.dart';
 
 class MainScreenWidget extends StatelessWidget {
   const MainScreenWidget({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class MainScreenWidget extends StatelessWidget {
             children: const [
               TimeModuleView(),
               BrushingTeethView(),
+              WeatherModuleView(),
             ],
           ),
         ),

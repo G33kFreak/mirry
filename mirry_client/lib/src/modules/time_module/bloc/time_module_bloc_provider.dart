@@ -11,7 +11,12 @@ class TimeModuleBlocProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TimeModuleBloc(),
+      create: (context) {
+        final bloc = TimeModuleBloc();
+        bloc.add(const InitTimeModule());
+
+        return bloc;
+      },
       child: child,
     );
   }

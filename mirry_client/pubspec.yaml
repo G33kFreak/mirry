@@ -28,6 +28,11 @@ dependencies:
   pausable_timer: ^1.0.0+6
   lottie: ^1.4.3
   json_annotation: ^4.7.0
+  dio: ^4.0.6
+  # TODO: Add for linux
+  geolocator: ^9.0.2
+  # For testing on macbook 
+  geolocator_apple: ^2.2.2
 
 dev_dependencies:
   auto_route_generator: ^5.0.2
