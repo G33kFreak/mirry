@@ -3,14 +3,14 @@ part of 'user_recognition_bloc.dart';
 @autoequalMixin
 class UserRecognitionState extends Equatable
     with _$UserRecognitionStateAutoequalMixin {
-  final User? currentUserId;
+  final User? currentUser;
 
-  const UserRecognitionState({this.currentUserId});
+  const UserRecognitionState({this.currentUser});
 
   UserRecognitionState copyWyth({
     User? currentUserId,
   }) =>
       UserRecognitionState(
-        currentUserId: currentUserId,
+        currentUser: currentUserId,
       );
 }

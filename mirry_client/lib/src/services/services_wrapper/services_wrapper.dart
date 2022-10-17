@@ -21,7 +21,7 @@ class ServicesWrapper extends StatelessWidget {
               ),
             ),
             duration: const Duration(milliseconds: 400),
-            child: state.currentUserId == null ? Container() : child,
+            child: state.currentUser == null ? Container() : child,
           ),
         );
       },

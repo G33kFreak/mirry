@@ -38,16 +38,18 @@ class UserRecognitionBloc
   void _onFaceRecognized(dynamic data) {
     final user = User.fromJson(data);
     _changesTimer?.cancel();
-    _changesTimer = Timer.periodic(
-      const Duration(milliseconds: 100),
-      (timer) => _timerUpdater(timer, () => add(UserChanged(user))),
-    );
+    if (state.currentUser != user) {
+      _changesTimer = Timer.periodic(
+        const Duration(milliseconds: 100),
+        (timer) => _timerUpdater(timer, () => add(UserChanged(user))),
+      );
+    }
   }
 
   void _onRecognizedLeft(dynamic _) {
     _changesTimer?.cancel();
     _changesTimer = Timer.periodic(
-      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 200),
       (timer) => _timerUpdater(timer, () => add(const UserChanged(null))),
     );
   }
