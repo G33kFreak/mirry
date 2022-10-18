@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mirry_client/src/modules/teeth_brusing_module/view/brushing_teeth_view.dart';
 import 'package:mirry_client/src/modules/time_module/view/time_module_view.dart';
 import 'package:mirry_client/src/modules/weather_module/view/weather_module_view.dart';
+import 'package:mirry_client/src/modules/welcome_module/view/welcome_module_view.dart';
 
 class MainScreenWidget extends StatelessWidget {
   const MainScreenWidget({Key? key}) : super(key: key);
@@ -16,14 +17,20 @@ class MainScreenWidget extends StatelessWidget {
             const TimeModuleView(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Expanded(
+              children: [
+                const Expanded(
                   child: WeatherModuleView(),
                 ),
                 Expanded(
-                  child: BrushingTeethView(),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: const [
+                      BrushingTeethView(),
+                      WelcomeModuleView(),
+                    ],
+                  ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ],
