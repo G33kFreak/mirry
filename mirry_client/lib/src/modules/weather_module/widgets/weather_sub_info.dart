@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirry_client/src/modules/weather_module/bloc/weather_module_bloc.dart';
+import 'package:mirry_client/src/modules/weather_module/utils/weather_utils.dart';
 import 'package:mirry_client/src/modules/weather_module/widgets/weather_sub_info_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,7 +13,7 @@ class WeatherSubInfo extends StatelessWidget {
     return BlocBuilder<WeatherModuleBloc, WeatherModuleState>(
       builder: (context, state) {
         return AnimatedContainer(
-          width: 200,
+          width: 250,
           padding: const EdgeInsets.all(16),
           duration: const Duration(milliseconds: 300),
           decoration: BoxDecoration(
@@ -29,7 +30,7 @@ class WeatherSubInfo extends StatelessWidget {
                   children: [
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.feelsLike}:',
-                      value: state.weather!.main.feelsLike.toString(),
+                      value: '${state.weather!.main.feelsLike.round()}°',
                     ),
                     const _Divider(),
                     WeatherSubInfoItem(
@@ -40,6 +41,25 @@ class WeatherSubInfo extends StatelessWidget {
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.visibility}:',
                       value: '${state.weather!.visibility} m.',
+                    ),
+                    const _Divider(),
+                    WeatherSubInfoItem(
+                      title: '${AppLocalizations.of(context)!.windSpeed}:',
+                      value: '${state.weather!.wind.speed} m/s',
+                    ),
+                    const _Divider(),
+                    WeatherSubInfoItem(
+                      title: '${AppLocalizations.of(context)!.sunrise}:',
+                      value: WeatherUtils.getFormattedSysDetails(
+                        state.weather!.sys.sunrise,
+                      ),
+                    ),
+                    const _Divider(),
+                    WeatherSubInfoItem(
+                      title: '${AppLocalizations.of(context)!.sunset}:',
+                      value: WeatherUtils.getFormattedSysDetails(
+                        state.weather!.sys.sunset,
+                      ),
                     ),
                   ],
                 ),
