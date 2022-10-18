@@ -4,5 +4,7 @@
   "feelsLike":"Feels like",
   "humidity":"Humidity",
   "visibility":"Visibility",
-  "windSpeed":"Wind speed"
+  "windSpeed":"Wind speed",
+  "sunrise":"Sunrise",
+  "sunset":"Sunset"
 }

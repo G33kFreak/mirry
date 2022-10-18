@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class WeatherUtils {
   static const _codesWithOneAnimation = [
     '04d',
@@ -22,5 +24,12 @@ class WeatherUtils {
       return weatherIcon.replaceAll('d', 'dn');
     }
     return weatherIcon;
+  }
+
+  static String getFormattedSysDetails(int timestamp) {
+    final DateFormat format = DateFormat.Hm();
+    final DateTime localTime =
+        DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    return format.format(localTime);
   }
 }
