@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import HttpException from "../models/HttpException";
+import MirrorSocketActions from "../models/MirrorSocketActions";
 import { ITodoItem, TodoItem } from "../models/TodoItem";
+import { getMirrorSocket } from "../sockets/mirror.socket";
 import { getInternalError } from "../utils/utils";
 
 const getList = async (req: Request, res: Response, next: NextFunction) => {
     const { page, limit } = req.query
 
     try {
-        const _limit = Number(limit ?? 1)
+        const _limit = Number(limit ?? 5)
         const _page = Number(page ?? 0)
 
         const itemsCount = await TodoItem.count()
@@ -17,7 +19,7 @@ const getList = async (req: Request, res: Response, next: NextFunction) => {
         const items = await TodoItem.find({ user: req.headers['user'] })
             .limit(_limit)
             .skip(_page * _limit)
-            .sort({ createdAt: 'asc'})
+            .sort({ createdAt: 'desc' })
 
         return res
             .status(StatusCodes.OK)
@@ -42,6 +44,12 @@ const postList = async (req: Request<any, ITodoItem>, res: Response, next: NextF
                 user: req.headers['user']
             })
             await newItem.save()
+            
+            const socket = await getMirrorSocket()
+            
+            if (socket){
+                socket.emit(MirrorSocketActions.TODO_ITEM_ADDED, newItem)
+            }
 
             return res
                 .status(StatusCodes.CREATED)
@@ -58,11 +66,19 @@ const postList = async (req: Request<any, ITodoItem>, res: Response, next: NextF
 const patchList = async (req: Request<any, ITodoItem>, res: Response, next: NextFunction) => {
     try {
         const todoItem: ITodoItem = req.body
-        await TodoItem.updateOne({ _id: todoItem.id }, { ...todoItem })
+        const updated = await TodoItem
+            .findByIdAndUpdate({ _id: todoItem.id }, { ...todoItem }, { new: true })
+            .select('-user -createdAt')
+
+        const socket = await getMirrorSocket()
+
+        if (socket) {
+            socket.emit(MirrorSocketActions.TODO_ITEM_CHANGED, updated)
+        }
 
         return res
             .status(StatusCodes.OK)
-            .json()
+            .json(updated)
 
     } catch (e) {
         next(new HttpException(
@@ -77,6 +93,12 @@ const deleteList = async (req: Request, res: Response) => {
 
     try {
         await TodoItem.deleteOne({ _id: id })
+
+        const socket = await getMirrorSocket()
+            
+        if (socket){
+            socket.emit(MirrorSocketActions.TODO_ITEM_DELETED, id)
+        }
 
         return res
             .status(StatusCodes.ACCEPTED)

@@ -5,8 +5,12 @@ import { getUnauthorizedException, isTokenExpired } from "../utils/authenticatio
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const accessToken = req.headers['authorization']
+    const user = req.query.user as string | null
 
     if (accessToken == env.MIRROR_API_KEY) {
+        if (user){
+            req.headers['user'] = user
+        }
         return next()
     }
 

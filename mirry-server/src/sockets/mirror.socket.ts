@@ -1,7 +1,6 @@
 import { Server } from "socket.io"
 import { Server as HttpServer } from "http"
 import env from "../config/env"
-import MirrorSocketActions from "../models/MirrorSocketActions"
 
 let socketServer: Server
 
