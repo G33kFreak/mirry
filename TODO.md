@@ -6,14 +6,20 @@
     - [x] Face recognition
     - [x] Welcome title
     - [ ] Add guest cases
+- [ ] Settings
+    - [ ] TODO settings (how many to show)
+    - [ ] Currencies trades (which pairs to show)
 - [x] Fetch weather, local time
     - [ ] Add more informations about weather
 - [x] Sunset and sunrise info
 - [ ] News
 - [x] TODO list
-    - [] TODO list client side
+    - [x] TODO list client side
+    - [x] TODO adding items
+    - [x] TODO deleting items
 - [ ] Integration with google calendar
 - [x] Currencies
+    - [ ] Add to client side
 - [ ] Music
 - [ ] "Mirry" voice supporter
 - [x] Teeth brushing functionality

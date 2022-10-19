@@ -24,6 +24,8 @@ class TodoModuleBloc extends Bloc<TodoModuleEvent, TodoModuleState> {
     _setupSocketsActions();
     on<InitTodoModule>(_onInitTodoModule);
     on<TodoItemChanged>(_onTodoItemChanged);
+    on<TodoItemAdded>(_onTodoItemAdded);
+    on<TodoItemDeleted>(_onTodoItemDeleted);
   }
 
   void _setupSocketsActions() {
@@ -31,11 +33,54 @@ class TodoModuleBloc extends Bloc<TodoModuleEvent, TodoModuleState> {
       MirrySocketActions.todoItemChanged.value,
       _onItemChangedSocketAction,
     );
+    _mirrySocket.socketChannel.on(
+      MirrySocketActions.todoItemAdded.value,
+      _onItemAddedSocketAction,
+    );
+    _mirrySocket.socketChannel.on(
+      MirrySocketActions.todoItemDeleted.value,
+      _onItemDeletedSocketAction,
+    );
   }
 
   void _onItemChangedSocketAction(dynamic data) {
     final todoItem = TodoItem.fromJson(data);
     add(TodoItemChanged(newTodoItem: todoItem));
+  }
+
+  void _onItemAddedSocketAction(dynamic data) {
+    final todoItem = TodoItem.fromJson(data);
+    add(TodoItemAdded(newTodoItem: todoItem));
+  }
+
+  void _onItemDeletedSocketAction(dynamic data) {
+    final deletedId = data.toString();
+    add(TodoItemDeleted(itemId: deletedId));
+  }
+
+  Future<void> _onTodoItemDeleted(
+    TodoItemDeleted event,
+    Emitter<TodoModuleState> emit,
+  ) async {
+    final index = state.todoItems.indexWhere((item) => item.id == event.itemId);
+
+    if (index != -1) {
+      add(InitTodoModule(userId: state.userId));
+    }
+  }
+
+  void _onTodoItemAdded(
+    TodoItemAdded event,
+    Emitter<TodoModuleState> emit,
+  ) {
+    final currentList = List<TodoItem>.from(state.todoItems)
+      ..insert(0, event.newTodoItem);
+
+    if (currentList.length > 5) {
+      currentList.removeLast();
+    }
+
+    emit(state.copyWith(todoItems: currentList));
   }
 
   void _onTodoItemChanged(
@@ -69,6 +114,7 @@ class TodoModuleBloc extends Bloc<TodoModuleEvent, TodoModuleState> {
       emit(state.copyWith(
         todoListResponse: listResponse,
         todoItems: listResponse.items,
+        userId: event.userId,
       ));
       //TODO: add error handling
     } catch (e) {
@@ -79,6 +125,8 @@ class TodoModuleBloc extends Bloc<TodoModuleEvent, TodoModuleState> {
   @override
   Future<void> close() {
     _mirrySocket.socketChannel.off(MirrySocketActions.todoItemChanged.value);
+    _mirrySocket.socketChannel.off(MirrySocketActions.todoItemAdded.value);
+    _mirrySocket.socketChannel.off(MirrySocketActions.todoItemDeleted.value);
     return super.close();
   }
 }

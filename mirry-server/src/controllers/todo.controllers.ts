@@ -44,6 +44,12 @@ const postList = async (req: Request<any, ITodoItem>, res: Response, next: NextF
                 user: req.headers['user']
             })
             await newItem.save()
+            
+            const socket = await getMirrorSocket()
+            
+            if (socket){
+                socket.emit(MirrorSocketActions.TODO_ITEM_ADDED, newItem)
+            }
 
             return res
                 .status(StatusCodes.CREATED)
@@ -87,6 +93,12 @@ const deleteList = async (req: Request, res: Response) => {
 
     try {
         await TodoItem.deleteOne({ _id: id })
+
+        const socket = await getMirrorSocket()
+            
+        if (socket){
+            socket.emit(MirrorSocketActions.TODO_ITEM_DELETED, id)
+        }
 
         return res
             .status(StatusCodes.ACCEPTED)

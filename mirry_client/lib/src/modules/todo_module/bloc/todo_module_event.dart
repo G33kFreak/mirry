@@ -22,3 +22,18 @@ class TodoItemChanged extends TodoModuleEvent
 
   const TodoItemChanged({required this.newTodoItem});
 }
+
+@autoequalMixin
+class TodoItemAdded extends TodoModuleEvent with _$TodoItemAddedAutoequalMixin {
+  final TodoItem newTodoItem;
+
+  const TodoItemAdded({required this.newTodoItem});
+}
+
+@autoequalMixin
+class TodoItemDeleted extends TodoModuleEvent
+    with _$TodoItemDeletedAutoequalMixin {
+  final String itemId;
+
+  const TodoItemDeleted({required this.itemId});
+}
