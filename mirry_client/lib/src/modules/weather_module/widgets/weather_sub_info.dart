@@ -4,6 +4,7 @@ import 'package:mirry_client/src/modules/weather_module/bloc/weather_module_bloc
 import 'package:mirry_client/src/modules/weather_module/utils/weather_utils.dart';
 import 'package:mirry_client/src/modules/weather_module/widgets/weather_sub_info_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mirry_client/src/widgets/list_divider.dart';
 
 class WeatherSubInfo extends StatelessWidget {
   const WeatherSubInfo({Key? key}) : super(key: key);
@@ -32,29 +33,29 @@ class WeatherSubInfo extends StatelessWidget {
                       title: '${AppLocalizations.of(context)!.feelsLike}:',
                       value: '${state.weather!.main.feelsLike.round()}°',
                     ),
-                    const _Divider(),
+                    const ListDivider(),
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.humidity}:',
                       value: '${state.weather!.main.humidity}%',
                     ),
-                    const _Divider(),
+                    const ListDivider(),
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.visibility}:',
                       value: '${state.weather!.visibility} m.',
                     ),
-                    const _Divider(),
+                    const ListDivider(),
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.windSpeed}:',
                       value: '${state.weather!.wind.speed} m/s',
                     ),
-                    const _Divider(),
+                    const ListDivider(),
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.sunrise}:',
                       value: WeatherUtils.getFormattedSysDetails(
                         state.weather!.sys.sunrise,
                       ),
                     ),
-                    const _Divider(),
+                    const ListDivider(),
                     WeatherSubInfoItem(
                       title: '${AppLocalizations.of(context)!.sunset}:',
                       value: WeatherUtils.getFormattedSysDetails(
@@ -65,18 +66,6 @@ class WeatherSubInfo extends StatelessWidget {
                 ),
         );
       },
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  const _Divider({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      child: Divider(height: 1),
     );
   }
 }

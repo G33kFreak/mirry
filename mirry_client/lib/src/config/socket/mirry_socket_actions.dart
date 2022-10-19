@@ -4,6 +4,7 @@ enum MirrySocketActions {
   recognizedUserLeft,
   brushingTeethStarted,
   brushingTeethStoped,
+  todoItemChanged,
 }
 
 extension GetKebabCase on MirrySocketActions {
@@ -19,6 +20,8 @@ extension GetKebabCase on MirrySocketActions {
         return 'brushing-teeth-started';
       case MirrySocketActions.brushingTeethStoped:
         return 'brushing-teeth-stoped';
+      case MirrySocketActions.todoItemChanged:
+        return 'todo-item-changed';
     }
   }
 }
