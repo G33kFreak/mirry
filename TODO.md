@@ -9,6 +9,7 @@
 - [ ] Settings
     - [ ] TODO settings (how many to show)
     - [ ] Currencies trades (which pairs to show)
+    - [ ] Welcome title
 - [x] Fetch weather, local time
     - [ ] Add more informations about weather
 - [x] Sunset and sunrise info

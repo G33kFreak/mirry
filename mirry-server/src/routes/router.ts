@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authenticationRouter from "./routes/authentication.routes";
 import recognitionRouter from "./routes/recognition.routes";
+import settingsRouter from "./routes/settings.routes";
 import teethBrushingRouter from "./routes/teethBrushing.routes";
 import todoRouter from "./routes/todo.routes";
 import tradesRouter from "./routes/trades.routes";
@@ -14,5 +15,6 @@ appRouter.use('/trades', tradesRouter)
 appRouter.use('/weather', weatherRouter)
 appRouter.use('/brushing', teethBrushingRouter)
 appRouter.use('/recognition', recognitionRouter)
+appRouter.use('/settings', settingsRouter)
 
 export default appRouter
