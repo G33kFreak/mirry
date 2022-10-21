@@ -9,6 +9,7 @@ import { getInternalError } from "../utils/utils"
 import jsonwebtoken from "jsonwebtoken"
 import multer from "multer"
 import usersImagesStorage from "../config/multer"
+import { UserSettings } from "../models/UserSettings"
 
 const refreshTokens = async (req: Request, res: Response, next: NextFunction) => {
     const { refreshToken } = req.body
@@ -80,8 +81,13 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
             username,
             password: encryptedPassword
         })
+        const newUserSettings = new UserSettings({
+            user: newUser.id
+        })
+
+        await newUserSettings.save()
         await newUser.save()
-        
+
         return res
             .status(StatusCodes.CREATED)
             .json(req.body)
