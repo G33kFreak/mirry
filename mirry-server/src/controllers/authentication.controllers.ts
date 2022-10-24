@@ -10,6 +10,8 @@ import jsonwebtoken from "jsonwebtoken"
 import multer from "multer"
 import usersImagesStorage from "../config/multer"
 import { UserSettings } from "../models/UserSettings"
+import { getRefreshToken, refreshGoogleTokens } from "../repositories/googleAuth.repository"
+import { GoogleTokens } from "../models/GoogleTokens"
 
 const refreshTokens = async (req: Request, res: Response, next: NextFunction) => {
     const { refreshToken } = req.body
@@ -105,9 +107,35 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+const connectGoogle = async (req: Request, res: Response, next: NextFunction) => {
+    const { idToken } = req.body
+    const { user } = req.headers
+
+    try {
+        const refreshToken = (await getRefreshToken(idToken)).data.refreshToken
+        const tokensResponse = (await refreshGoogleTokens(refreshToken)).data
+
+        const googleTokens = new GoogleTokens({
+            accessToken: tokensResponse.access_token,
+            refreshToken: tokensResponse.refresh_token,
+            user
+        })
+
+        await googleTokens.save()
+
+        return res
+            .status(StatusCodes.CREATED)
+            .json()
+    } catch (e) {
+        return next(getInternalError(e))
+    }
+
+}
+
 export {
     refreshTokens,
     login,
     uploadUserPhoto,
-    signup
+    signup,
+    connectGoogle,
 }
