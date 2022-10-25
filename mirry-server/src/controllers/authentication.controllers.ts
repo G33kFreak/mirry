@@ -4,13 +4,13 @@ import HttpException from "../models/HttpException"
 import { User } from "../models/User"
 import { generateJwt, getTokenExpiredException, getUnauthorizedException, isTokenExpired, validatePassword } from "../utils/authentication.utils"
 import bcrypt from 'bcrypt'
-import { Tokens } from "../models/Tokens"
+import { ITokens, Tokens } from "../models/Tokens"
 import { getInternalError } from "../utils/utils"
 import jsonwebtoken from "jsonwebtoken"
 import multer from "multer"
 import usersImagesStorage from "../config/multer"
 import { UserSettings } from "../models/UserSettings"
-import { getRefreshToken, refreshGoogleTokens } from "../repositories/googleAuth.repository"
+import { getGoogleTokens, refreshGoogleTokens } from "../repositories/googleAuth.repository"
 import { GoogleTokens } from "../models/GoogleTokens"
 
 const refreshTokens = async (req: Request, res: Response, next: NextFunction) => {
@@ -108,12 +108,17 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const connectGoogle = async (req: Request, res: Response, next: NextFunction) => {
-    const { idToken } = req.body
+    const { code } = req.body
     const { user } = req.headers
 
     try {
-        const refreshToken = (await getRefreshToken(idToken)).data.refreshToken
-        const tokensResponse = (await refreshGoogleTokens(refreshToken)).data
+        const existingTokens = await GoogleTokens.findOne({ user })
+
+        if (existingTokens) {
+            await existingTokens.remove()
+        }
+
+        const tokensResponse = (await getGoogleTokens(code)).data
 
         const googleTokens = new GoogleTokens({
             accessToken: tokensResponse.access_token,

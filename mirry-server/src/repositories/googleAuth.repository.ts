@@ -1,27 +1,23 @@
 import axios, { AxiosInstance } from "axios"
-import env from "../config/env"
 import { thirdPartApiConfigs } from "../config/thirdPartApis"
-import { ITokens } from "../models/Tokens"
+
 
 const getGoogleAuthApiClient = (): AxiosInstance => {
     return axios.create(thirdPartApiConfigs.googleAuth)
 }
 
-const getRefreshToken = async (idToken: string) => {
-    return await getGoogleAuthApiClient().post(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp',
+const getGoogleTokens = async (authCode: string) => {
+    return await getGoogleAuthApiClient().post('',
         {
-            requestUri: env.GOOGLE_REQUEST_URI,
-            postBody: `id_token=${idToken}&providerId=google.com`,
-            returnIdpCredential: true,
-            returnSecureToken: true
+            redirect_uri: '',
+            code: authCode,
+            grant_type: 'authorization_code'
         }
     )
 }
 
 const refreshGoogleTokens = async (refreshToken: string) => {
-    return await getGoogleAuthApiClient().post(
-        'https://securetoken.googleapis.com/v1/token',
+    return await getGoogleAuthApiClient().post('',
         {
             grant_type: 'refresh_token',
             refresh_token: refreshToken
@@ -30,7 +26,7 @@ const refreshGoogleTokens = async (refreshToken: string) => {
 }
 
 export {
-    getRefreshToken,
+    getGoogleTokens,
     refreshGoogleTokens
 }
 
