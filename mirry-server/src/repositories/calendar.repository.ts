@@ -29,9 +29,9 @@ const onErrorInterceptor = async (error: any, userId: string) => {
                 setTokensToCache(newTokens)
                 await newTokens.save()
                 await tokens.remove()
-                
-                axios.defaults.headers.common['Authorization'] = `Bearer ${newTokens.accessToken}`
-                return axios(originalRequest)
+
+                originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`
+                return Promise.resolve(axios(originalRequest))
             } catch (e) {
                 return Promise.reject(e)
             }
@@ -71,6 +71,18 @@ const getCalendarsListFromApi = async (userId: string) => {
     return await getCalendarApiClient(userId).get('/users/me/calendarList')
 }
 
+const getEventsListFromApi = async (calendarId: string, userId: string, timeMin: string, timeMax: string) => {
+    return await getCalendarApiClient(userId).get(`/calendars/${calendarId}/events`, {
+        params: {
+            timeMin,
+            timeMax,
+            singleEvents: true,
+            orderBy: 'startTime'
+        }
+    })
+}
+
 export {
-    getCalendarsListFromApi
+    getCalendarsListFromApi,
+    getEventsListFromApi,
 }

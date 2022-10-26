@@ -36,7 +36,7 @@ class UserRecognitionBloc
   }
 
   void _onFaceRecognized(dynamic data) {
-    final user = User.fromJson(data);
+    final user = User.fromJson(data['user']);
     _changesTimer?.cancel();
     if (state.currentUser != user) {
       _changesTimer = Timer.periodic(
