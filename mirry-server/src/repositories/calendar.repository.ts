@@ -30,8 +30,8 @@ const onErrorInterceptor = async (error: any, userId: string) => {
                 await newTokens.save()
                 await tokens.remove()
 
-                axios.defaults.headers.common['Authorization'] = `Bearer ${newTokens.accessToken}`
-                return axios(originalRequest)
+                originalRequest.headers['Authorization'] = `Bearer ${newTokens.accessToken}`
+                return Promise.resolve(axios(originalRequest))
             } catch (e) {
                 return Promise.reject(e)
             }
