@@ -1,6 +1,6 @@
 ## Basic functionality:
 
-- [x] Authentication
+- [ ] Authentication
     - [x] JWT
     - [ ] Saving users' settings
     - [x] Face recognition
@@ -18,7 +18,7 @@
     - [x] TODO list client side
     - [x] TODO adding items
     - [x] TODO deleting items
-- [ ] Integration with google calendar
+- [x] Integration with google calendar
     - [x] Sign In through mobile app with BE auth code
     - [x] Refresh tokens logic
     - [x] Get list of calendars
