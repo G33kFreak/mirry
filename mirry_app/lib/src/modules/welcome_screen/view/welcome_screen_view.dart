@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mirry/src/config/routes/loading.dart';
 import 'package:mirry/src/modules/welcome_screen/bloc/welcome_screen_bloc.dart';
 import 'package:mirry/src/modules/welcome_screen/bloc/welcome_screen_bloc_provider.dart';
 import 'package:mirry/src/utils/loading_state.dart';
@@ -25,8 +26,11 @@ class WelcomeScreenView extends StatelessWidget with AutoRouteWrapper {
                 return Column(
                   children: [
                     const Spacer(),
-                    AnimatedAppIcon(
-                      isAnimating: state.loadingState is InProgressState,
+                    Hero(
+                      tag: LoadingScreenView.heroTag,
+                      child: AnimatedAppIcon(
+                        isAnimating: state.loadingState is InProgressState,
+                      ),
                     ),
                     const Spacer(flex: 2),
                     MInput(

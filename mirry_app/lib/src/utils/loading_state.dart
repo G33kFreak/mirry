@@ -26,10 +26,8 @@ class SuccessState extends LoadingState {
 }
 
 class FailedState extends LoadingState {
-  final Exception error;
-
-  const FailedState({required this.error});
+  const FailedState();
 
   @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [];
 }

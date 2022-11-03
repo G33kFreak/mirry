@@ -2,6 +2,8 @@ import 'package:autoequal/autoequal.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_status_code/http_status_code.dart';
+import 'package:mirry/src/modules/welcome_screen/utils/welcome_screen_utils.dart';
 import 'package:mirry/src/repositories/tokens/tokens_repository.dart';
 import 'package:mirry/src/utils/loading_state.dart';
 
@@ -24,6 +26,7 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
     on<TurnPasswordVisibility>(_onTurnPasswordVisibility);
     on<LoadingStateChanged>(_onLoadingStateChanged);
     on<SignInPressed>(_onSignInPressed);
+    on<HideError>(_onHideError);
   }
 
   void _onChangeUsername(
@@ -67,8 +70,44 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
         password: state.password,
       );
       await _tokensRepository.saveToken(tokens);
+      await Future.delayed(const Duration(milliseconds: 300));
+      emit(state.copyWith(loadingState: const SuccessState()));
+    } on DioError catch (e) {
+      if (e.response?.statusCode == StatusCode.UNAUTHORIZED) {
+        throw _emitErrorState(WelcomeScreenError.wrongData, emit);
+      } else {
+        throw _emitErrorState(WelcomeScreenError.serverError, emit, e.error);
+      }
     } catch (e) {
-      //
+      throw _emitErrorState(WelcomeScreenError.unknownError, emit, e);
+    } finally {
+      if (state.error != WelcomeScreenError.none) {
+        add(const HideError());
+      }
     }
+  }
+
+  void _onHideError(
+    HideError event,
+    Emitter<WelcomeScreenState> emit,
+  ) {
+    emit(state.copyWith(
+      error: WelcomeScreenError.none,
+      loadingState: const IdleState(),
+    ));
+  }
+
+  WelcomeScreenBlocException _emitErrorState(
+    WelcomeScreenError error,
+    Emitter<WelcomeScreenState> emit, [
+    dynamic extra,
+  ]) {
+    emit(state.copyWith(
+      error: error,
+      loadingState: const FailedState(),
+    ));
+
+    final errorText = extra == null ? error.text : '${error.text} $extra';
+    return WelcomeScreenBlocException(errorText);
   }
 }

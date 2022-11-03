@@ -35,13 +35,14 @@ class AuthenticationBloc
       case AuthenticationStatus.unknown:
         return emit(const AuthenticationState.unknown());
       case AuthenticationStatus.authenticated:
-        return emit(const AuthenticationState.unauthenticated());
+        return emit(const AuthenticationState.authenticated());
       case AuthenticationStatus.unauthenticated:
         {
           final tokens = await _tokensRepository.getTokens();
           if (tokens != null) {
             return emit(const AuthenticationState.authenticated());
           } else {
+            await Future.delayed(const Duration(seconds: 3));
             return emit(const AuthenticationState.unauthenticated());
           }
         }

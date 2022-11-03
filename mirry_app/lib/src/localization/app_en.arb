@@ -4,5 +4,9 @@
   "password": "Password",
   "firstTime": "First time?",
   "signIn": "Sign in",
-  "signUp": "Sign up"
+  "signUp": "Sign up",
+  "noError": "No error",
+  "wrongUsernameOrPassword": "Wrong username or password",
+  "serverError": "Server error",
+  "unknownError": "Unknown error"
 }

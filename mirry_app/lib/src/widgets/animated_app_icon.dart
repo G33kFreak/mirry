@@ -28,13 +28,17 @@ class _AnimatedAppIconState extends State<AnimatedAppIcon>
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
       ..addStatusListener(_animationStatusListener);
+
+    if (widget.isAnimating) {
+      _startAnimation();
+    }
     super.initState();
   }
 
   void _animationStatusListener(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
       _animationController.reverse();
-    } else if (status == AnimationStatus.dismissed) {
+    } else if (status == AnimationStatus.dismissed && widget.isAnimating) {
       _animationController.forward();
     }
   }
@@ -43,8 +47,10 @@ class _AnimatedAppIconState extends State<AnimatedAppIcon>
     _animationController.forward();
   }
 
-  //TODO: Stop animation
-  void _stopAnimation() {}
+  void _stopAnimation() {
+    _animationController.stop();
+    _animationController.animateTo(0);
+  }
 
   @override
   void didUpdateWidget(covariant AnimatedAppIcon oldWidget) {

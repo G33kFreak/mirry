@@ -42,3 +42,8 @@ class SignInPressed extends WelcomeScreenEvent
     with _$SignInPressedAutoequalMixin {
   const SignInPressed();
 }
+
+@autoequalMixin
+class HideError extends WelcomeScreenEvent with _$HideErrorAutoequalMixin {
+  const HideError();
+}
