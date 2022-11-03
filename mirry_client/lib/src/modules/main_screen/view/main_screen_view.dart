@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mirry_client/src/modules/calendar_module/view/calendar_module_view.dart';
 import 'package:mirry_client/src/modules/teeth_brusing_module/view/brushing_teeth_view.dart';
 import 'package:mirry_client/src/modules/time_module/view/time_module_view.dart';
 import 'package:mirry_client/src/modules/todo_module/view/todo_module_view.dart';
@@ -31,8 +32,15 @@ class MainScreenWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Expanded(
-                  child: TodoModuleView(),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: const [
+                      TodoModuleView(),
+                      SizedBox(height: 16),
+                      CalendarModuleView(),
+                    ],
+                  ),
                 ),
               ],
             ),
