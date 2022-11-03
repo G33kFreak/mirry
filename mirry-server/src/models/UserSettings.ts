@@ -33,6 +33,9 @@ const settingsSchema = new Schema({
             default: [CurrenciesPairs.EUR_USD]
         }
     },
+    calendar: {
+        email: String,
+    },
 }, { versionKey: false })
 
 const UserSettings = model<IUserSettings>('UserSettings', settingsSchema)
