@@ -1,6 +1,8 @@
 {
-  "appTitle": "mirry",
-  "@appTitle": {
-    "description": "The title of the application"
-  }
+  "appTitle": "Mirry",
+  "username": "Username",
+  "password": "Password",
+  "firstTime": "First time?",
+  "signIn": "Sign in",
+  "signUp": "Sign up"
 }

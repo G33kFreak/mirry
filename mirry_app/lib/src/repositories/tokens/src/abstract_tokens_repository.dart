@@ -17,4 +17,12 @@ abstract class ITokensRepository {
     Dio httpClient, {
     required String refreshToken,
   });
+
+  Future<JwtTokens> performLogIn(
+    Dio httpClient, {
+    required String username,
+    required String password,
+  });
+
+  void dispose();
 }

@@ -4,9 +4,13 @@ class TokensRepository
     with IHiveRepository<JwtTokens>
     implements ITokensRepository {
   final RefreshTokens _refreshTokens;
+  final LogIn _logIn;
 
-  TokensRepository({required RefreshTokens refreshTokens})
-      : _refreshTokens = refreshTokens;
+  TokensRepository({
+    required RefreshTokens refreshTokens,
+    required LogIn logIn,
+  })  : _refreshTokens = refreshTokens,
+        _logIn = logIn;
 
   @override
   StreamController<AuthenticationStatus>? controller =
@@ -46,8 +50,6 @@ class TokensRepository
     yield* controller!.stream;
   }
 
-  void dispose() => controller!.close();
-
   @override
   Future<JwtTokens?> performRefreshTokens(
     Dio httpClient, {
@@ -66,4 +68,27 @@ class TokensRepository
       throw ApiResponseParseException(e.toString());
     }
   }
+
+  @override
+  Future<JwtTokens> performLogIn(
+    Dio httpClient, {
+    required String username,
+    required String password,
+  }) async {
+    final response = await _logIn(
+      httpClient,
+      username: username,
+      password: password,
+    );
+
+    try {
+      final tokens = JwtTokens.fromJson(response.data);
+      return tokens;
+    } catch (e) {
+      throw ApiResponseParseException(e.toString());
+    }
+  }
+
+  @override
+  void dispose() => controller!.close();
 }

@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:mirry/src/widgets/app_icon_painter.dart';
+
+class AnimatedAppIcon extends StatefulWidget {
+  final bool isAnimating;
+
+  const AnimatedAppIcon({
+    Key? key,
+    this.isAnimating = false,
+  }) : super(key: key);
+
+  @override
+  State<AnimatedAppIcon> createState() => _AnimatedAppIconState();
+}
+
+class _AnimatedAppIconState extends State<AnimatedAppIcon>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late Animation<double> _animation;
+
+  static const Duration _animationDuration = Duration(milliseconds: 800);
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: _animationDuration,
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
+      ..addStatusListener(_animationStatusListener);
+    super.initState();
+  }
+
+  void _animationStatusListener(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      _animationController.reverse();
+    } else if (status == AnimationStatus.dismissed) {
+      _animationController.forward();
+    }
+  }
+
+  void _startAnimation() {
+    _animationController.forward();
+  }
+
+  //TODO: Stop animation
+  void _stopAnimation() {}
+
+  @override
+  void didUpdateWidget(covariant AnimatedAppIcon oldWidget) {
+    if (oldWidget.isAnimating != widget.isAnimating) {
+      if (widget.isAnimating) {
+        _startAnimation();
+      } else {
+        _stopAnimation();
+      }
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, _) => CustomPaint(
+        size: const Size(192, 192),
+        painter: AppIconPainter(opacityOfLoaderStroke: _animation.value),
+      ),
+    );
+  }
+}

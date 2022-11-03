@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mirry/src/config/routes.dart';
+import 'package:mirry/src/config/theme/app_theme.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
@@ -33,6 +34,6 @@ class MyApp extends StatelessWidget {
         onGenerateTitle: (BuildContext context) =>
             AppLocalizations.of(context)!.appTitle,
 
-        theme: ThemeData(),
+        theme: AppTheme.defaultTheme,
       );
 }
