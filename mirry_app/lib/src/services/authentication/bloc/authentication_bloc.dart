@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:autoequal/autoequal.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirry/src/repositories/tokens/models/authentication_status.dart';
@@ -19,7 +18,6 @@ class AuthenticationBloc
 
   AuthenticationBloc({
     required ITokensRepository tokensRepository,
-    required Dio httpClient,
   })  : _tokensRepository = tokensRepository,
         super(const AuthenticationState.unknown()) {
     _authenticationSubscription = _tokensRepository.status.listen(

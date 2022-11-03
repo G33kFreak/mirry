@@ -20,7 +20,7 @@ class MButton extends StatelessWidget {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       child: SizedBox(
-        key: UniqueKey(),
+        key: ValueKey(isBlocked),
         height: 40,
         width: width,
         child: IgnorePointer(

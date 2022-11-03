@@ -85,8 +85,8 @@ class WelcomeScreenView extends StatelessWidget with AutoRouteWrapper {
                             .read<WelcomeScreenBloc>()
                             .add(const SignInPressed()),
                         title: AppLocalizations.of(context)!.signIn,
-                        isBlocked: state.username.isNotEmpty &&
-                            state.password.isNotEmpty,
+                        isBlocked:
+                            state.username.isEmpty || state.password.isEmpty,
                       ),
                     ),
                     const Spacer(flex: 8)

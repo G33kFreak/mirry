@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mirry/src/repositories/tokens/models/jwt_tokens.dart';
 
 Future<void> setupHive() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,7 +9,7 @@ Future<void> setupHive() async {
 }
 
 void _registerAdapters() {
-  // Hive.registerAdapter<User>(UserAdapter());
+  Hive.registerAdapter<JwtTokens>(JwtTokensAdapter());
 }
 
 abstract class IHiveRepository<E> {
