@@ -60,3 +60,9 @@ class UploadPhoto extends WelcomeScreenEvent with _$UploadPhotoAutoequalMixin {
 
   const UploadPhoto({required this.file});
 }
+
+@autoequalMixin
+class SignUpPressed extends WelcomeScreenEvent
+    with _$SignUpPressedAutoequalMixin {
+  const SignUpPressed();
+}

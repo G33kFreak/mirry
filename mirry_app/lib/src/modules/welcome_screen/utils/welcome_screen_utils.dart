@@ -11,6 +11,7 @@ enum WelcomeScreenError {
   wrongData,
   serverError,
   unknownError,
+  signUpError,
 }
 
 class WelcomeScreenBlocException with EquatableMixin implements Exception {
@@ -35,6 +36,8 @@ extension StringValuesForWelcomeErrors on WelcomeScreenError {
         return 'Server error';
       case WelcomeScreenError.unknownError:
         return 'Unknown error';
+      case WelcomeScreenError.signUpError:
+        return 'Sign up error';
     }
   }
 
@@ -48,6 +51,8 @@ extension StringValuesForWelcomeErrors on WelcomeScreenError {
         return appLocalizations.serverError;
       case WelcomeScreenError.unknownError:
         return appLocalizations.unknownError;
+      case WelcomeScreenError.signUpError:
+        return appLocalizations.wrongSignUpData;
     }
   }
 }

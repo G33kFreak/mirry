@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mirry/src/widgets/app_icon_painter.dart';
 
 class AnimatedAppIcon extends StatefulWidget {
+  final double size;
   final bool isAnimating;
 
   const AnimatedAppIcon({
     Key? key,
+    this.size = 192,
     this.isAnimating = false,
   }) : super(key: key);
 
@@ -75,7 +77,7 @@ class _AnimatedAppIconState extends State<AnimatedAppIcon>
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, _) => CustomPaint(
-        size: const Size(192, 192),
+        size: Size(widget.size, widget.size),
         painter: AppIconPainter(opacityOfLoaderStroke: _animation.value),
       ),
     );

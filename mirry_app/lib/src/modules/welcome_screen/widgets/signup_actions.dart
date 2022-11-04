@@ -72,7 +72,7 @@ class SignupActions extends StatelessWidget {
               child: MButton(
                 onTap: () => context
                     .read<WelcomeScreenBloc>()
-                    .add(const SignInPressed()),
+                    .add(const SignUpPressed()),
                 title: AppLocalizations.of(context)!.signIn,
                 isBlocked: state.username.isEmpty ||
                     state.password.isEmpty ||

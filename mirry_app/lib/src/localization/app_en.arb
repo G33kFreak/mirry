@@ -11,5 +11,6 @@
   "unknownError": "Unknown error",
   "alreadyUse": "Already use Mirry?",
   "uploadPhoto": "Upload photo",
-  "changePhoto": "Change photo"
+  "changePhoto": "Change photo",
+  "wrongSignUpData": "Wrong data, check password, username and photo"
 }

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import HttpException from "../models/HttpException";
+import { User } from "../models/User";
 import { IUserSettings, UserSettings } from "../models/UserSettings";
 import { getInternalError } from "../utils/utils";
 
@@ -8,10 +9,11 @@ const getSettings = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.headers['user']
         const settings = await UserSettings.findOne({ user }).select('-user')
+        const username = (await User.findOne({ id: user }))?.username
 
         return res
             .status(StatusCodes.OK)
-            .json(settings)
+            .json({ ...settings?.toJSON(), username })
     } catch (e) {
         return next(getInternalError(e))
     }

@@ -31,6 +31,7 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
     on<HideError>(_onHideError);
     on<ChangeScreenMode>(_onChangeScreenMode);
     on<UploadPhoto>(_onUploadPhoto);
+    on<SignUpPressed>(_onSignUpPressed);
   }
 
   void _onChangeUsername(
@@ -116,6 +117,31 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
     Emitter<WelcomeScreenState> emit,
   ) {
     emit(state.copyWith(photo: event.file));
+  }
+
+  Future<void> _onSignUpPressed(
+    SignUpPressed event,
+    Emitter<WelcomeScreenState> emit,
+  ) async {
+    emit(state.copyWith(loadingState: const InProgressState()));
+
+    try {
+      await _tokensRepository.performSignUp(
+        _httpClient,
+        username: state.username,
+        password: state.password,
+        photo: state.photo!,
+      );
+      await Future.delayed(const Duration(milliseconds: 300));
+      emit(state.copyWith(
+        loadingState: const SuccessState(),
+        screenMode: WelcomeScreenMode.signin,
+      ));
+    } on DioError catch (e) {
+      throw _emitErrorState(WelcomeScreenError.signUpError, emit, e.error);
+    } catch (e) {
+      throw _emitErrorState(WelcomeScreenError.unknownError, emit, e);
+    }
   }
 
   WelcomeScreenBlocException _emitErrorState(

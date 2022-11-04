@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirry/src/repositories/tokens/models/authentication_status.dart';
 import 'package:mirry/src/repositories/tokens/tokens_repository.dart';
+import 'package:mirry/src/services/settings/bloc/settings_bloc.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -13,12 +14,15 @@ part 'authentication_bloc.g.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final ITokensRepository _tokensRepository;
+  final SettingsBloc _settingsBloc;
 
   late StreamSubscription<AuthenticationStatus> _authenticationSubscription;
 
   AuthenticationBloc({
     required ITokensRepository tokensRepository,
+    required SettingsBloc settingsBloc,
   })  : _tokensRepository = tokensRepository,
+        _settingsBloc = settingsBloc,
         super(const AuthenticationState.unknown()) {
     _authenticationSubscription = _tokensRepository.status.listen(
       (status) => add(AuthenticationStatusChanged(status)),
@@ -35,11 +39,15 @@ class AuthenticationBloc
       case AuthenticationStatus.unknown:
         return emit(const AuthenticationState.unknown());
       case AuthenticationStatus.authenticated:
-        return emit(const AuthenticationState.authenticated());
+        {
+          _settingsBloc.add(const InitSettings());
+          return emit(const AuthenticationState.authenticated());
+        }
       case AuthenticationStatus.unauthenticated:
         {
           final tokens = await _tokensRepository.getTokens();
           if (tokens != null) {
+            _settingsBloc.add(const InitSettings());
             return emit(const AuthenticationState.authenticated());
           } else {
             await Future.delayed(const Duration(seconds: 3));
