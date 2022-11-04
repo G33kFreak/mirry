@@ -1,0 +1,22 @@
+{
+  "appTitle": "Mirry",
+  "username": "Username",
+  "password": "Password",
+  "firstTime": "First time?",
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "noError": "No error",
+  "wrongUsernameOrPassword": "Wrong username or password",
+  "serverError": "Server error",
+  "unknownError": "Unknown error",
+  "alreadyUse": "Already use Mirry?",
+  "uploadPhoto": "Upload photo",
+  "changePhoto": "Change photo",
+  "wrongSignUpData": "Wrong data, check password, username and photo",
+  "todo": "To do list",
+  "currencies": "Currencies",
+  "todoDescription": "Configure your to do list, add, delete, check and modify items. Also you can configure amount of items that Mirry displays",
+  "currenciesDescription": "Select pairs of currencies that will be displayed by Mirry. You are able to configure a few pairs",
+  "googleIntegration": "Google integration",
+  "googleIntegrationDescription": "Connect your google account in order to get access to calendar. You are allowed to connect a few accounts"
+}
