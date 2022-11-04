@@ -5,12 +5,15 @@ class TokensRepository
     implements ITokensRepository {
   final RefreshTokens _refreshTokens;
   final LogIn _logIn;
+  final SignUp _signUp;
 
   TokensRepository({
     required RefreshTokens refreshTokens,
     required LogIn logIn,
+    required SignUp signUp,
   })  : _refreshTokens = refreshTokens,
-        _logIn = logIn;
+        _logIn = logIn,
+        _signUp = signUp;
 
   @override
   StreamController<AuthenticationStatus>? controller =
@@ -87,6 +90,24 @@ class TokensRepository
     } catch (e) {
       throw ApiResponseParseException(e.toString());
     }
+  }
+
+  @override
+  Future<void> performSignUp(
+    Dio httpClient, {
+    required String username,
+    required String password,
+    required File photo,
+  }) async {
+    final fileName = photo.path.split('/').last;
+
+    final formData = FormData.fromMap({
+      'photo': await MultipartFile.fromFile(photo.path, filename: fileName),
+      'username': username,
+      'password': password,
+    });
+
+    await _signUp(httpClient, data: formData);
   }
 
   @override

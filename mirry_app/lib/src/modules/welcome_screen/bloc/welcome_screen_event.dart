@@ -47,3 +47,16 @@ class SignInPressed extends WelcomeScreenEvent
 class HideError extends WelcomeScreenEvent with _$HideErrorAutoequalMixin {
   const HideError();
 }
+
+@autoequalMixin
+class ChangeScreenMode extends WelcomeScreenEvent
+    with _$ChangeScreenModeAutoequalMixin {
+  const ChangeScreenMode();
+}
+
+@autoequalMixin
+class UploadPhoto extends WelcomeScreenEvent with _$UploadPhotoAutoequalMixin {
+  final File file;
+
+  const UploadPhoto({required this.file});
+}

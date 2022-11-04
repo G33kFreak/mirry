@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:autoequal/autoequal.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -27,6 +29,8 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
     on<LoadingStateChanged>(_onLoadingStateChanged);
     on<SignInPressed>(_onSignInPressed);
     on<HideError>(_onHideError);
+    on<ChangeScreenMode>(_onChangeScreenMode);
+    on<UploadPhoto>(_onUploadPhoto);
   }
 
   void _onChangeUsername(
@@ -95,6 +99,23 @@ class WelcomeScreenBloc extends Bloc<WelcomeScreenEvent, WelcomeScreenState> {
       error: WelcomeScreenError.none,
       loadingState: const IdleState(),
     ));
+  }
+
+  void _onChangeScreenMode(
+    ChangeScreenMode event,
+    Emitter<WelcomeScreenState> emit,
+  ) {
+    final newMode = state.screenMode == WelcomeScreenMode.signin
+        ? WelcomeScreenMode.signup
+        : WelcomeScreenMode.signin;
+    emit(state.copyWith(screenMode: newMode));
+  }
+
+  void _onUploadPhoto(
+    UploadPhoto event,
+    Emitter<WelcomeScreenState> emit,
+  ) {
+    emit(state.copyWith(photo: event.file));
   }
 
   WelcomeScreenBlocException _emitErrorState(

@@ -1,6 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+enum WelcomeScreenMode {
+  signin,
+  signup,
+}
+
 enum WelcomeScreenError {
   none,
   wrongData,

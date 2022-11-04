@@ -21,6 +21,7 @@ class ServicesProvider extends StatelessWidget {
           create: (context) => TokensRepository(
             refreshTokens: refreshTokens,
             logIn: logIn,
+            signUp: signUp,
           ),
         ),
         RepositoryProvider<ApiClient>(

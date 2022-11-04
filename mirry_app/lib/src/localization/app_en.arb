@@ -8,5 +8,8 @@
   "noError": "No error",
   "wrongUsernameOrPassword": "Wrong username or password",
   "serverError": "Server error",
-  "unknownError": "Unknown error"
+  "unknownError": "Unknown error",
+  "alreadyUse": "Already use Mirry?",
+  "uploadPhoto": "Upload photo",
+  "changePhoto": "Change photo"
 }

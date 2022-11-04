@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mirry/src/config/routes/loading.dart';
 import 'package:mirry/src/modules/welcome_screen/bloc/welcome_screen_bloc.dart';
 import 'package:mirry/src/modules/welcome_screen/bloc/welcome_screen_bloc_provider.dart';
+import 'package:mirry/src/modules/welcome_screen/utils/welcome_screen_utils.dart';
+import 'package:mirry/src/modules/welcome_screen/widgets/signin_actions.dart';
+import 'package:mirry/src/modules/welcome_screen/widgets/signup_actions.dart';
 import 'package:mirry/src/utils/loading_state.dart';
 import 'package:mirry/src/widgets/animated_app_icon.dart';
-import 'package:mirry/src/widgets/m_button.dart';
 import 'package:mirry/src/widgets/m_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -56,44 +57,34 @@ class WelcomeScreenView extends StatelessWidget with AutoRouteWrapper {
                           .add(const TurnPasswordVisibility()),
                     ),
                     const SizedBox(height: 16),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: AppLocalizations.of(context)!.firstTime,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          TextSpan(
-                            text: ' ${AppLocalizations.of(context)!.signUp}!',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.blue),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                context.read<WelcomeScreenBloc>().add(
-                                    const LoadingStateChanged(
-                                        loadingState: InProgressState()));
-                              },
-                          ),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) => SizeTransition(
+                        sizeFactor: animation,
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
+                      ),
+                      layoutBuilder: (currentChild, previousChildren) => Stack(
+                        alignment: Alignment.topCenter,
+                        children: <Widget>[
+                          ...previousChildren,
+                          if (currentChild != null) currentChild,
                         ],
                       ),
+                      child: state.screenMode == WelcomeScreenMode.signin
+                          ? const SigninActions()
+                          : const SignupActions(),
                     ),
-                    const SizedBox(height: 32),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: MButton(
-                        onTap: () => context
-                            .read<WelcomeScreenBloc>()
-                            .add(const SignInPressed()),
-                        title: AppLocalizations.of(context)!.signIn,
-                        isBlocked:
-                            state.username.isEmpty || state.password.isEmpty,
-                      ),
+                    const Spacer(flex: 8),
+                    Text(
+                      'Built by g33kFreak',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: const Color(0xFF484854)),
                     ),
-                    const Spacer(flex: 8)
                   ],
                 );
               },

@@ -61,7 +61,7 @@ android {
     defaultConfig {
         applicationId dartEnvironmentVariables.APP_IDENTIFIER
         applicationIdSuffix dartEnvironmentVariables.APP_SUFFIX
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 31
         versionCode appVersionCode.toInteger()
         versionName flutterVersionName

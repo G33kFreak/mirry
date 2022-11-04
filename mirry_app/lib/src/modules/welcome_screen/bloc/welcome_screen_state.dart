@@ -8,6 +8,8 @@ class WelcomeScreenState extends Equatable
   final String password;
   final LoadingState loadingState;
   final WelcomeScreenError error;
+  final WelcomeScreenMode screenMode;
+  final File? photo;
 
   const WelcomeScreenState({
     this.hidePassword = true,
@@ -15,6 +17,8 @@ class WelcomeScreenState extends Equatable
     this.password = '',
     this.loadingState = const IdleState(),
     this.error = WelcomeScreenError.none,
+    this.screenMode = WelcomeScreenMode.signin,
+    this.photo,
   });
 
   WelcomeScreenState copyWith({
@@ -23,6 +27,8 @@ class WelcomeScreenState extends Equatable
     String? password,
     LoadingState? loadingState,
     WelcomeScreenError? error,
+    WelcomeScreenMode? screenMode,
+    File? photo,
   }) =>
       WelcomeScreenState(
         hidePassword: hidePassword ?? this.hidePassword,
@@ -30,5 +36,7 @@ class WelcomeScreenState extends Equatable
         password: password ?? this.password,
         loadingState: loadingState ?? this.loadingState,
         error: error ?? this.error,
+        screenMode: screenMode ?? this.screenMode,
+        photo: photo ?? this.photo,
       );
 }

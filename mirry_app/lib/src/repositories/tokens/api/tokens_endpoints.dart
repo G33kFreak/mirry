@@ -9,6 +9,10 @@ typedef RefreshTokens = Future<Response> Function(
   Dio, {
   required String refreshToken,
 });
+typedef SignUp = Future<Response> Function(
+  Dio, {
+  required FormData data,
+});
 
 final LogIn logIn = (
   Dio httpClient, {
@@ -28,3 +32,9 @@ final RefreshTokens refreshTokens = (
       '/auth/refresh-tokens',
       data: {'refreshToken': refreshToken},
     );
+
+final SignUp signUp = (
+  Dio httpClient, {
+  required FormData data,
+}) =>
+    httpClient.post('/auth/signup', data: data);

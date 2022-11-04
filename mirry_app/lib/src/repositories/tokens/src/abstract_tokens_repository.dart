@@ -24,5 +24,12 @@ abstract class ITokensRepository {
     required String password,
   });
 
+  Future<void> performSignUp(
+    Dio httpClient, {
+    required String username,
+    required String password,
+    required File photo,
+  });
+
   void dispose();
 }
