@@ -12,41 +12,45 @@ class MAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
-        return SafeArea(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  width: 1,
-                  color: accentDark,
+        return Container(
+          color: bgColor,
+          child: SafeArea(
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: const BoxDecoration(
+                color: bgColor,
+                border: Border(
+                  bottom: BorderSide(
+                    width: 1,
+                    color: accentDark,
+                  ),
                 ),
               ),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Hero(
-                  tag: LoadingScreenView.heroTag,
-                  child: AnimatedAppIcon(
-                    isAnimating: true,
-                    size: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Hero(
+                    tag: LoadingScreenView.heroTag,
+                    child: AnimatedAppIcon(
+                      isAnimating: true,
+                      size: 48,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 600),
-                  child: Text(
-                    state.settings?.username ?? '',
-                    key: ValueKey(state.settings?.username ?? ''),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        ?.copyWith(fontSize: 16),
+                  const SizedBox(width: 16),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 600),
+                    child: Text(
+                      state.settings?.username ?? '',
+                      key: ValueKey(state.settings?.username ?? ''),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          ?.copyWith(fontSize: 16),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
