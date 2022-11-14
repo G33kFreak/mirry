@@ -3,7 +3,7 @@ part of '../mirry_connection_repository.dart';
 abstract class IMirryConnectionRepository {
   String get baseUrlKey;
 
-  Future<String?> getBaseUrl();
+  FutureOr<String?> getBaseUrlIp();
 
-  Future<void> saveBaseUrl(String baseUrl);
+  Future<void> saveBaseUrlIp(String baseUrl);
 }

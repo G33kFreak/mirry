@@ -33,7 +33,7 @@ class MirryConnectionServiceBloc
     bool shouldSave = false,
   }) {
     if (shouldSave) {
-      _mirryConnectionRepository.saveBaseUrl(address);
+      _mirryConnectionRepository.saveBaseUrlIp(address);
       log('[Connection service] Saved base url: $address');
     }
     add(MirryConnectionStateChanged(isConnected: true, baseUrl: address));
@@ -55,7 +55,7 @@ class MirryConnectionServiceBloc
     InitMirryConnectionService event,
     Emitter<MirryConnectionServiceState> emit,
   ) async {
-    final baseUrl = await _mirryConnectionRepository.getBaseUrl();
+    final baseUrl = await _mirryConnectionRepository.getBaseUrlIp();
 
     if (baseUrl != null) {
       Socket.connect(baseUrl, 8000).then(

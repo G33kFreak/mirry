@@ -11,7 +11,7 @@
       "args": [
         "--dart-define=APP_NAME=Mirry[dev]",
         "--dart-define=APP_SUFFIX=.dev",
-        "--dart-define=BASE_URL=http://localhost:8000"
+        "--dart-define=MIRRY_PORT=8000"
       ]
     },
     {
@@ -22,7 +22,7 @@
       "args": [
         "--dart-define=APP_NAME=Mirry[dev]",
         "--dart-define=APP_SUFFIX=.dev",
-        "--dart-define=BASE_URL=http://localhost:8000"
+        "--dart-define=MIRRY_PORT=8000"
       ]
     },
     {

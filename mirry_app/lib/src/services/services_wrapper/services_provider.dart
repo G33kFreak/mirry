@@ -35,6 +35,8 @@ class ServicesProvider extends StatelessWidget {
         RepositoryProvider<ApiClient>(
           create: (context) => ApiClient(
             tokensRepository: context.read<ITokensRepository>(),
+            mirryConnectionRepository:
+                context.read<IMirryConnectionRepository>(),
           ),
         ),
         RepositoryProvider<ISettingsRepository>(

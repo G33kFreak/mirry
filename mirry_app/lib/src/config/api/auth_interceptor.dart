@@ -6,10 +6,10 @@ import 'package:mirry/src/repositories/tokens/tokens_repository.dart';
 
 const unauthCodes = [StatusCode.UNAUTHORIZED, StatusCode.FORBIDDEN];
 
-class MInterceptor implements InterceptorsWrapper {
+class AuthInterceptor implements InterceptorsWrapper {
   final ITokensRepository _tokensRepository;
 
-  const MInterceptor({
+  const AuthInterceptor({
     required ITokensRepository tokensRepository,
   }) : _tokensRepository = tokensRepository;
 

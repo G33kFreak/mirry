@@ -10,12 +10,12 @@ class MirryConnectionRepository
   String get baseUrlKey => 'baseUrlKey';
 
   @override
-  Future<String?> getBaseUrl() async {
+  FutureOr<String?> getBaseUrlIp() async {
     return (await box).get(baseUrlKey);
   }
 
   @override
-  Future<void> saveBaseUrl(String baseUrl) async {
+  Future<void> saveBaseUrlIp(String baseUrl) async {
     return (await box).put(baseUrlKey, baseUrl);
   }
 }
