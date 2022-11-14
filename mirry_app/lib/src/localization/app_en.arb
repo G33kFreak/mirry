@@ -18,5 +18,6 @@
   "todoDescription": "Configure your to do list, add, delete, check and modify items. Also you can configure amount of items that Mirry displays",
   "currenciesDescription": "Select pairs of currencies that will be displayed by Mirry. You are able to configure a few pairs",
   "googleIntegration": "Google integration",
-  "googleIntegrationDescription": "Connect your google account in order to get access to calendar. You are allowed to connect a few accounts"
+  "googleIntegrationDescription": "Connect your google account in order to get access to calendar. You are allowed to connect a few accounts",
+  "mirryConnectionStatus":"Connection status"
 }

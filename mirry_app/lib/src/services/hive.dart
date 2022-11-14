@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mirry/src/repositories/settings/models/settings.dart';
@@ -21,7 +23,7 @@ abstract class IHiveRepository<E> {
 
   String get boxKey;
 
-  Future<Box<E>> get box async {
+  FutureOr<Box<E>> get box async {
     _box ??= await Hive.openBox<E>(boxKey);
     return _box!;
   }
